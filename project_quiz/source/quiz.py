@@ -6,7 +6,7 @@ import time
 import cv2
 from PIL import Image
 
-import ex1_kwstest as kws
+import ex1_kwstest_modified as kws_m
 import ex2_getVoice2Text as tts
 import sound
 import os
@@ -125,7 +125,7 @@ def quizStart(answer, quizImage):
     answerPossible = [answer]
 
     while 1:
-        recog = kws.btn_test('기가지니')
+        recog = kws_m.btn_test('기가지니')
 
         semaphore.acquire()
         if timerExitFlag == 1:
