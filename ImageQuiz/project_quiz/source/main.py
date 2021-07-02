@@ -1,20 +1,47 @@
 import sys
 import time
 import quiz
-import ex1_kwstest as kws
+import ex1_kwstest_modified as kws
+import ex2_getVoice2Text as stt
+import threading
 import urllib.request
+import RPi.GPIO as GPIO
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout, QLCDNumber, QHBoxLayout, QGridLayout
 from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtCore import Qt, QRunnable, QCoreApplication, QThreadPool
 import random
+import pyautogui
 
 from PyQt5.uic.properties import QtGui
+
+gameStart = 0
+
+def start(channel):
+    global gameStart
+    if gameStart == 0:
+        pyautogui.press('space')
+        gameStart = 1
+
+def callback(channel):  
+    print("HI")
+    #print("falling edge detected from pin {}".format(channel))
+    global gameStart
+    if gameStart == 0:
+        pyautogui.press('space')
+        gameStart = 1
+        
+GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(False)
+GPIO.setup(29, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(31, GPIO.OUT)
+GPIO.add_event_detect(29, GPIO.FALLING, callback=start, bouncetime=300)
 
 person = quiz.readData()
 Evnt={0:'Start', 1:'Descript', 2:'Descript_detail', 3:'END'}
 
 class UIApp(QWidget):
-
+    start = 0
+    global cv
 
     def __init__(self):
         super().__init__()
@@ -52,16 +79,31 @@ class UIApp(QWidget):
         self.setWindowTitle('나영석PD')
         self.move(400, 50)
 
-        self.showFullScreen()
+        #self.showFullScreen()
+        self.showMaximized()
+        
+    def gameStart(self):
+        answerArr = quiz.makeQuiz(person)
+        answer = answerArr[0]
+        pic = answerArr[1]
 
+        self.obj = QPixmap(pic)
+        self.obj = self.obj.scaledToHeight(900)
+        self.img_label.setPixmap(self.obj)
+
+        self.lcd.display(self.key)
+        self.hbox.addWidget(self.lcd, 0, Qt.AlignTop)
+        self.repaint()
+                
+        print(quiz.quizStart(answerArr[0]))
 
     #입력 event 처리
     def keyPressEvent(self, e):
         #입력 상황
         if e.key() == Qt.Key_Space:
-            self.key=random.randint(1,len(person.keys())-1)
-            name = person[self.key]
-            pic = 'images/' + name
+            answerArr = quiz.makeQuiz(person)
+            answer = answerArr[0]
+            pic = answerArr[1]
 
             self.obj = QPixmap(pic)
             self.obj = self.obj.scaledToHeight(900)
@@ -70,6 +112,8 @@ class UIApp(QWidget):
             self.lcd.display(self.key)
             self.hbox.addWidget(self.lcd, 0, Qt.AlignTop)
             self.repaint()
+            
+            print(quiz.quizStart(answerArr[0]))
 
         elif e.key()== Qt.Key_A :
             self.key += 1
