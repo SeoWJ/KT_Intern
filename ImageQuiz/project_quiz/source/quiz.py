@@ -39,35 +39,18 @@ semaphore = threading.Semaphore(1)
 
 
 def readData():
-    global answerList
-
     file_path = 'images'
     file_names = os.listdir(file_path)
 
     answerList = list()
-    person = {}
 
     for idx, name in enumerate(file_names):
         if (name[-3] + name[-2] + name[-1]) == 'jpg' or (name[-3] + name[-2] + name[-1]) == 'png':
-            person.setdefault(idx, name[:-4])
             answerList.append(name[:-4])
         else:
-            person.setdefault(idx, name[:-5])
             answerList.append(name[:-5])
-
-    # Old Version.
-    """global answerList
-
-    answerList = list()
-
-    f = open("data/NameData.csv", 'r', encoding = 'utf-8-sig')
-    fd = csv.reader(f)
-
-    for line in fd:
-        answerList.append(line[0])
-
-    f.close()"""
-
+            
+    return answerList
 
 def makeQuiz():
     global answerList
