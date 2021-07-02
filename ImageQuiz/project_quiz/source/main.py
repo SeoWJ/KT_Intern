@@ -82,21 +82,8 @@ class UIApp(QWidget):
         #self.showFullScreen()
         self.showMaximized()
         
-    def gameStart(self):
-        answerArr = quiz.makeQuiz(person)
-        answer = answerArr[0]
-        pic = answerArr[1]
-
-        self.obj = QPixmap(pic)
-        self.obj = self.obj.scaledToHeight(900)
-        self.img_label.setPixmap(self.obj)
-
-        self.lcd.display(self.key)
-        self.hbox.addWidget(self.lcd, 0, Qt.AlignTop)
-        self.repaint()
-                
-        print(quiz.quizStart(answerArr[0]))
-
+        ### 여기까지 초기화면 띄우기 ###
+        
     #입력 event 처리
     def keyPressEvent(self, e):
         #입력 상황

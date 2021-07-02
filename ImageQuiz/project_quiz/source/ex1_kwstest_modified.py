@@ -14,19 +14,13 @@ KWSID = ['기가지니', '지니야', '친구야', '자기야']
 RATE = 16000
 CHUNK = 512
 
-GPIO.setmode(GPIO.BOARD)
-GPIO.setwarnings(False)
-GPIO.setup(29, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(31, GPIO.OUT)
 btn_status = False
 
-"""def callback(channel):  
+def callback(channel):  
 	print("falling edge detected from pin {}".format(channel))
 	global btn_status
 	btn_status = True
 print(btn_status)
-
-GPIO.add_event_detect(29, GPIO.FALLING, callback=callback, bouncetime=10)"""
 
 ERROR_HANDLER_FUNC = CFUNCTYPE(None, c_char_p, c_int, c_char_p, c_int, c_char_p)
 def py_error_handler(filename, line, function, err, fmt):
@@ -72,6 +66,15 @@ def btn_detect_original():
 				return 200
 			
 def btn_detect():
+	GPIO.cleanup()
+	
+	GPIO.setmode(GPIO.BOARD)
+	GPIO.setwarnings(False)
+	GPIO.setup(29, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+	GPIO.setup(31, GPIO.OUT)
+	
+	GPIO.add_event_detect(29, GPIO.FALLING, callback=callback, bouncetime=10)
+	
 	global btn_status
 	#with MS.MicrophoneStream(RATE, CHUNK) as stream:
 		#audio_generator = stream.generator()
