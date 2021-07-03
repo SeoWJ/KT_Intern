@@ -101,9 +101,10 @@ def quizStart(answer):
     threadTimer.start()
 
     answerPossible = [answer]
-
+    
     while 1:
         correct = False
+        
         recog = kws.btn_test('기가지니')
 
         semaphore.acquire()

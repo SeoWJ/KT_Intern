@@ -14,34 +14,11 @@ import pyautogui
 
 from PyQt5.uic.properties import QtGui
 
-gameStart = 0
-
-def start(channel):
-    global gameStart
-    if gameStart == 0:
-        pyautogui.press('space')
-        gameStart = 1
-
-def callback(channel):  
-    print("HI")
-    #print("falling edge detected from pin {}".format(channel))
-    global gameStart
-    if gameStart == 0:
-        pyautogui.press('space')
-        gameStart = 1
-        
-GPIO.setmode(GPIO.BOARD)
-GPIO.setwarnings(False)
-GPIO.setup(29, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(31, GPIO.OUT)
-GPIO.add_event_detect(29, GPIO.FALLING, callback=start, bouncetime=300)
-
 person = quiz.readData()
 Evnt={0:'Start', 1:'Descript', 2:'Descript_detail', 3:'END'}
 
 class UIApp(QWidget):
     start = 0
-    global cv
 
     def __init__(self):
         super().__init__()
@@ -87,10 +64,12 @@ class UIApp(QWidget):
     #입력 event 처리
     def keyPressEvent(self, e):
         #입력 상황
-        if e.key() == Qt.Key_Space:
+        if e.key() == Qt.Key_Space:           
             answerArr = quiz.makeQuiz(person)
             answer = answerArr[0]
             pic = answerArr[1]
+            
+            print("answer : " + answer)
 
             self.obj = QPixmap(pic)
             self.obj = self.obj.scaledToHeight(900)

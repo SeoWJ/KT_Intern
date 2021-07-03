@@ -22,6 +22,13 @@ def callback(channel):
 	btn_status = True
 print(btn_status)
 
+GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(False)
+GPIO.setup(29, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(31, GPIO.OUT)
+	
+GPIO.add_event_detect(29, GPIO.FALLING, callback=callback, bouncetime=10)
+
 ERROR_HANDLER_FUNC = CFUNCTYPE(None, c_char_p, c_int, c_char_p, c_int, c_char_p)
 def py_error_handler(filename, line, function, err, fmt):
   dummy_var = 0
@@ -65,16 +72,7 @@ def btn_detect_original():
 				MS.play_file("../data/sample_sound.wav")
 				return 200
 			
-def btn_detect():
-	GPIO.cleanup()
-	
-	GPIO.setmode(GPIO.BOARD)
-	GPIO.setwarnings(False)
-	GPIO.setup(29, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-	GPIO.setup(31, GPIO.OUT)
-	
-	GPIO.add_event_detect(29, GPIO.FALLING, callback=callback, bouncetime=10)
-	
+def btn_detect():	
 	global btn_status
 	#with MS.MicrophoneStream(RATE, CHUNK) as stream:
 		#audio_generator = stream.generator()
