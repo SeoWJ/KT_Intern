@@ -235,7 +235,8 @@ class UIApp(QWidget):
 				sound.correctSound()
 				self.timeCount = 10
 				self.key+=1
-				pic = answerList[self.key]
+				print(imageList[self.key])
+				pic = imageList[self.key]
 				self.obj = QPixmap(pic)
 				self.obj = self.obj.scaledToHeight(500)
 				self.lcd.display(self.timeCount)	
