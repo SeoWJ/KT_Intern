@@ -52,13 +52,7 @@ class Intro(QMainWindow, form_class):
 		global questionNum, countTrue, countFalse, score, answerList, imageList
 		recog = kws.btn_test('기가지니')
 		
-		if recog == 200 and widget.currentIndex()==0:
-            
-			answerList=self.readData()
-			
-			randList=self.random_List(questionNum,len(answerList))
-			imageList, answerList =self.makeQuiz(randList)
-			
+		if recog == 200 and widget.currentIndex()==0:		
 			print(answerList)
 			print(imageList)
 			widget.setCurrentIndex(widget.currentIndex()+1)
@@ -66,59 +60,6 @@ class Intro(QMainWindow, form_class):
 				"background-color: qradialgradient(spread:pad, cx:0.499, cy:0.499318, radius:0.871, fx:0.5, fy:0.5, stop:0.0097561 rgba(255, 255, 255, 255), stop:0.887805 rgba(255, 211, 38, 255));")
 			print(widget.currentIndex())
 			self.timer.stop()
-	
-	def readData(self):
-		global answerList
-	
-		file_path = 'images'
-		file_names = os.listdir(file_path)
-	
-		answerList = list()
-		per = {}
-	
-		for idx, name in enumerate(file_names):
-			if (name[-3] + name[-2] + name[-1]) == 'jpg' or (name[-3] + name[-2] + name[-1]) == 'png':
-				per.setdefault(idx, name[:-4])
-				answerList.append(name[:-4])
-			else:
-				per.setdefault(idx, name[:-5])
-				answerList.append(name[:-5])
-		#print(answerList)
-		return answerList	
-	
-	def random_List(self,imageNum, maxImageNum):
-		result = []
-	
-		for v in range(maxImageNum):
-		
-			result.append(v)
-			random.shuffle(result)
-		return result[0:imageNum]
-
-	def makeQuiz(self, randList):
-	
-		global answerList
-		answerSortedList=[]
-
-		while len(randList)>0:
-			answerIndex = randList.pop(0)
-		
-			answer = answerList[answerIndex]
-			quizImage = 0
-
-			if os.path.isfile("images/" + answer + ".jpg"):
-				quizImage = Image.open("images/" + answer + ".jpg")
-			elif os.path.isfile("images/" + answer + ".png"):
-				quizImage = Image.open("images/" + answer + ".png")
-			elif os.path.isfile("images/" + answer + ".jfif"):
-				quizImage = Image.open("images/" + answer + ".jfif")
-			elif os.path.isfile("images/" + answer + ".jpeg"):
-				quizImage = Image.open("images/" + answer + ".jpeg")
-			imageList.append(quizImage)
-			answerSortedList.append(answer)
-
-		#quizImage.save(answer+"png")
-		return imageList, answerSortedList
 
 class End(QMainWindow, form_class2):
     def __init__(self):
@@ -277,8 +218,66 @@ class UIApp(QWidget):
 			sound.wrongSound()
 			self.timer2.stop()
 			self.timer3.stop()
+			
+def readData():
+	global answerList
+	
+	file_path = 'images'
+	file_names = os.listdir(file_path)
+	
+	answerList = list()
+	per = {}
+	
+	for idx, name in enumerate(file_names):
+		if (name[-3] + name[-2] + name[-1]) == 'jpg' or (name[-3] + name[-2] + name[-1]) == 'png':
+			per.setdefault(idx, name[:-4])
+			answerList.append(name[:-4])
+		else:
+			per.setdefault(idx, name[:-5])
+			answerList.append(name[:-5])
+	#print(answerList)
+	return answerList	
+	
+def random_List(imageNum, maxImageNum):
+	result = []
+	
+	for v in range(maxImageNum):
+		result.append(v)
+		random.shuffle(result)
+		
+	return result[0:imageNum]
+
+def makeQuiz(randList):
+	
+	global answerList
+	answerSortedList=[]
+
+	while len(randList)>0:
+		answerIndex = randList.pop(0)
+		
+		answer = answerList[answerIndex]
+		quizImage = 0
+
+		if os.path.isfile("images/" + answer + ".jpg"):
+			quizImage = Image.open("images/" + answer + ".jpg")
+		elif os.path.isfile("images/" + answer + ".png"):
+			quizImage = Image.open("images/" + answer + ".png")
+		elif os.path.isfile("images/" + answer + ".jfif"):
+			quizImage = Image.open("images/" + answer + ".jfif")
+		elif os.path.isfile("images/" + answer + ".jpeg"):
+			quizImage = Image.open("images/" + answer + ".jpeg")
+		imageList.append(quizImage)
+		answerSortedList.append(answer)
+
+	#quizImage.save(answer+"png")
+	return imageList, answerSortedList
 
 if __name__ == '__main__':
+	answerList = readData()
+			
+	randList = random_List(questionNum,len(answerList))
+	imageList, answerList = makeQuiz(randList)
+	
 	app = QApplication(sys.argv)
 	# 화면 전환용 Widget 설정
 	widget = QtWidgets.QStackedWidget()
