@@ -11,8 +11,8 @@ from PyQt5.QtCore import QProcess,QTimer
 
 import time
 import random
-import ex1_kwstest2 as kws
-import ex2_getVoice2Text2 as tts
+import ex1_kwstest_modified as kws
+import ex2_getVoice2Text as tts
 import MicrophoneStream as MS
 import csv
 import os
