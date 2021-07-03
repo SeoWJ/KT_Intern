@@ -1,3 +1,8 @@
+- showImage.py : 포즈 분석 결과를 skeleton 좌표가 찍힌 이미지로 출력하는 코드
+- showAccuracy.py : 포즈 분석 결과를 수치화하여 두 player의 승/패 결과를 출력하는 코드
+
+
+#showAccuracy.py
 1. 라즈베리파이 카메라 모듈을 활용하여 실시간 이미지 촬영
  - 두 명의 player를 기준으로 함
  
