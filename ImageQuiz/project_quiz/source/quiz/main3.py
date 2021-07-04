@@ -27,6 +27,7 @@ timerTimeSizeDefault = 10	#문제당 시간
 questionNum = 10	#출제 문제 갯수
 global timerExitFlag
 global gg
+global widget
 countTrue = 0
 countFalse = 0
 
@@ -45,7 +46,7 @@ class Intro(QMainWindow, form_class):
 		self.timer.start(100)
 		self.timer.setInterval(10)
 		self.timer.timeout.connect(self.keyPressEvent2)
-    
+		print("INTRO")    
     
 	def keyPressEvent2(self):
 		#입력 상황
@@ -121,15 +122,35 @@ class Intro(QMainWindow, form_class):
 		return imageList, answerSortedList
 
 class End(QMainWindow, form_class2):
-    def __init__(self):
-        super().__init__()
-        self.setupUi(self)
-
-    def keyPressEvent(self, e):
-        #입력 상황
-        if e.key() == Qt.Key_A:
-            widget.setCurrentIndex(widget.currentIndex()==0)
-            print(widget.currentIndex())
+	def __init__(self):
+		super().__init__()
+		self.setupUi(self)
+		
+		self.timer4 = QtCore.QTimer(self)
+		self.timer4.start(1000)
+		self.timer4.setInterval(400)
+		self.timer4.timeout.connect(self.buttonPressed)
+		
+		print("END")
+		
+	def buttonPressed(self):
+		recog = kws.btn_test('기가지니')
+		
+		if recog == 200:
+		    w1 = Intro()
+		    w2 = UIApp()
+		    w3 = End()
+		    widget.addWidget(w1)
+		    widget.addWidget(w2)
+		    widget.addWidget(w3)
+		    
+		    widget.setCurrentIndex((widget.currentIndex() + 1) % 3)
+		    print(widget.currentIndex())
+			
+	def keyPressEvent(self, e):
+		if e.key() == Qt.Key_A:
+			widget.setCurrentIndex(widget.currentIndex()==0)
+			print(widget.currentIndex())
 
 class UIApp(QWidget):
 	global questionNum, countTrue, countFalse, score, randList, answerList, person, imageList
@@ -149,6 +170,8 @@ class UIApp(QWidget):
 		self.timer3.start(0)
 		self.timer3.setInterval(1000)
 		self.timer3.timeout.connect(self.timeCounter)
+		
+		print("UIAPP")
 		
 		
 
@@ -278,6 +301,7 @@ class UIApp(QWidget):
 			self.timer3.stop()
 
 if __name__ == '__main__':
+	global widget
 	app = QApplication(sys.argv)
 	# 화면 전환용 Widget 설정
 	widget = QtWidgets.QStackedWidget()

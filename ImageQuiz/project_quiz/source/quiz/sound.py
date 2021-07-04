@@ -27,9 +27,9 @@ asound.snd_lib_error_set_handler(c_error_handler)
 def correctSound():
 	with MS.MicrophoneStream(RATE, CHUNK) as stream:
 		audio_generator = stream.generator()
-		MS.play_file("/home/pi/Desktop/dsds/python3/audios/correct.wav") 
+		MS.play_file("audios/correct.wav") 
 	
 def wrongSound():
 	with MS.MicrophoneStream(RATE, CHUNK) as stream:
 		audio_generator = stream.generator()
-		MS.play_file("/home/pi/Desktop/dsds/python3/audios/wrong.wav")
+		MS.play_file("audios/wrong.wav")
