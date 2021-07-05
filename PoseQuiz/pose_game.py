@@ -6,10 +6,11 @@ from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtCore import Qt, QRunnable, QCoreApplication, QThreadPool, QTimer, QTime
 import random
 
+from PyQt5 import QtWidgets, uic
 
+subjects = ["자유의 여신상", "고릴라", "축구선수"]
 
 class UIApp(QWidget):
-
 
     def __init__(self):
         super().__init__()
@@ -19,8 +20,9 @@ class UIApp(QWidget):
         self.setStyleSheet(
             "background-color: pink;")
 
-        # 이미지 오브젝트 받아옴 (딕셔너리 형태) 초기값은 신서유기8 페이지
-
+        # 이미지 오브젝트 받아옴 (딕셔너리 형태)
+        self.key = 0
+        
         obj = QPixmap('img\pose_intro')
         obj = obj.scaledToWidth(1500)
         self.img_label = QLabel()
@@ -66,35 +68,38 @@ class UIApp(QWidget):
 
         self.showFullScreen()
 
-
     #입력 event 처리
     def keyPressEvent(self, e):
         #입력 상황
         if e.key() == Qt.Key_Space:
-
-            self.count = 2
+            if self.key >= len(subjects):
+                self.close()
+            self.count = 5
             self.title.setVisible(False)
-            txt= "자유의 여신상"
+            txt= subjects[self.key]
+            self.key += 1
             self.img_label.setText(txt)
             self.img_label.setFont(QFont('Arial', 75))
 
             self.desc.setVisible(True)
             self.desc.setText('포즈를 취해주세요!')
-            self.hbox.addWidget(self.lcd, 0, Qt.AlignTop)
-
+            self.hbox.addWidget(self.lcd, 5, Qt.AlignTop)
 
             self.timer.start()
             self.repaint()
+            
 
         elif e.key() == Qt.Key_Backspace:
             self.close()
+            
     def timeout(self):
         sender = self.sender()
         self.count-=1
         self.lcd.display(self.count)
 
-        if self.count==0:
+        if self.count== -1:
             self.timer.stop()
+            self.lcd.display(0)
 
             self.desc.setVisible(False)
             self.title.setVisible(True)
@@ -106,7 +111,7 @@ class UIApp(QWidget):
 
             self.repaint()
 
-            time.sleep(2)
+            time.sleep(4)
 
             obj = QPixmap('img\pose_pic.png')
             obj = obj.scaledToWidth(1500)
