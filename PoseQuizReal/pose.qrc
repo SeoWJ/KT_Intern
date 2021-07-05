@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="/img">
+    <file>img/dancer.png</file>
+    <file>img/man.png</file>
+    <file>img/posemain.png</file>
+    <file>img/posetitle.png</file>
+    <file>img/pressstart.png</file>
+  </qresource>
+</RCC>
