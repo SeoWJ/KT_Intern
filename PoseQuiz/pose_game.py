@@ -77,7 +77,6 @@ class UIApp(QWidget):
             self.count = 5
             self.title.setVisible(False)
             txt= subjects[self.key]
-            self.key += 1
             self.img_label.setText(txt)
             self.img_label.setFont(QFont('Arial', 75))
 
@@ -105,7 +104,7 @@ class UIApp(QWidget):
             self.title.setVisible(True)
             self.title.setText('정답공개')
 
-            obj = QPixmap('img\pose_answer.png')
+            obj = QPixmap('img\pose_answer'+str(self.key)+'.jpg')
             obj = obj.scaledToWidth(1500)
             self.img_label.setPixmap(obj)
 
@@ -117,6 +116,8 @@ class UIApp(QWidget):
             obj = obj.scaledToWidth(1500)
             self.img_label.setPixmap(obj)
             self.title.setText('촬영사진')
+            
+            self.key += 1
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
