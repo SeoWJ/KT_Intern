@@ -140,6 +140,7 @@ class UIApp(QWidget):
         self.img_label = QLabel()
         self.img_label.setPixmap(obj)
         self.img_label.setStyleSheet("background-color : transparent")
+        self.img_label.setFixedHeight(850)
         self.img_label.setAlignment(Qt.AlignCenter)
 
         self.lcd = QLCDNumber()
@@ -167,13 +168,11 @@ class UIApp(QWidget):
         self.desc.setAlignment(Qt.AlignHCenter)
         self.desc.setVisible(False)
 
-        self.vbox.addStretch(1)
+        #l, t, r, b = self.vbox.getContentsMargins()
+        self.vbox.setContentsMargins(0, 0, 0, 0)
         self.vbox.addWidget(self.title)
-        self.vbox.addStretch(1)
         self.vbox.addWidget(self.img_label)
-        self.vbox.addStretch(1)
         self.vbox.addWidget(self.desc)
-        self.vbox.addStretch(1)
 
         self.hbox.addLayout(self.vbox)
         self.setLayout(self.hbox)
@@ -224,11 +223,12 @@ class UIApp(QWidget):
             self.desc.setVisible(False)
             self.title.setVisible(True)
             self.title.setText('정답공개')
+            self.title.setAlignment(Qt.AlignCenter)
 
             answer_img=subjects_image[self.key-1]
 
-            obj = QPixmap(answer_img)
-            #obj=QPixmap('img/pose_pic.png')
+            #obj = QPixmap(answer_img)
+            obj=QPixmap('pose_pic.png')
             #obj = obj.scaledToHeight(850)
             self.img_label.setPixmap(obj)
             self.repaint()
@@ -237,7 +237,7 @@ class UIApp(QWidget):
 
             obj = QPixmap('photo.jpg')
             #obj=QPixmap('img/dancer.png')
-            obj = obj.scaledToHeight(850)
+            #obj = obj.scaledToHeight(850)
             self.img_label.setPixmap(obj)
             self.title.setText('촬영사진')
 
