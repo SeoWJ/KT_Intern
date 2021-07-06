@@ -136,7 +136,7 @@ class UIApp(QWidget):
         
         
         obj = QPixmap('img\pose_intro')
-        obj = obj.scaledToWidth(1500)
+        obj = obj.scaledToHeight(800)
         self.img_label = QLabel()
         self.img_label.setPixmap(obj)
         self.img_label.setStyleSheet("background-color : transparent")
@@ -151,7 +151,6 @@ class UIApp(QWidget):
         self.timer = QTimer(self)
         self.timer.setInterval(1000)
         self.timer.timeout.connect(self.timeout)
-        #self.count=2
 
         # UI layout
         self.vbox = QVBoxLayout()
@@ -159,24 +158,27 @@ class UIApp(QWidget):
         self.hbox = QHBoxLayout()
 
         self.title = QLabel('title')
-        self.title.setFont(QFont('Arial', 50))
+        self.title.setFont(QFont('Arial', 70))
         self.title.setAlignment(Qt.AlignHCenter)
         self.title.setVisible(False)
 
         self.desc = QLabel('description')
-        self.desc.setFont(QFont('Arial', 50))
+        self.desc.setFont(QFont('Arial', 30))
         self.desc.setAlignment(Qt.AlignHCenter)
         self.desc.setVisible(False)
 
+        self.vbox.addStretch(1)
         self.vbox.addWidget(self.title)
+        self.vbox.addStretch(1)
         self.vbox.addWidget(self.img_label)
+        self.vbox.addStretch(1)
         self.vbox.addWidget(self.desc)
+        self.vbox.addStretch(1)
 
         self.hbox.addLayout(self.vbox)
         self.setLayout(self.hbox)
 
         self.setWindowTitle('posing')
-        #self.move(400, 50)
 
         self.showFullScreen()
 
@@ -186,12 +188,14 @@ class UIApp(QWidget):
         if e.key() == Qt.Key_Space:
             if self.key >= len(subjects):
                 self.close()
-            self.count = 5
+
+            self.count = 2
             self.title.setVisible(False)
+
             txt= subjects[self.key]
             self.key += 1
             self.img_label.setText(txt)
-            self.img_label.setFont(QFont('Arial', 75))
+            self.img_label.setFont(QFont('Arial', 170))
 
             self.desc.setVisible(True)
             self.desc.setText('포즈를 취해주세요!')
@@ -206,14 +210,13 @@ class UIApp(QWidget):
             self.close()
 
     def timeout(self):
-        sender = self.sender()
         self.count-=1
         self.lcd.display(self.count)
         
         if self.count== -1:
             self.timer.stop()
             self.lcd.display(0)
-            
+
             #takePicture()
             analyzePose(self)
             result=analyzePose(self)
@@ -225,21 +228,23 @@ class UIApp(QWidget):
             answer_img=subjects_image[self.key-1]
 
             obj = QPixmap(answer_img)
-            obj = obj.scaledToWidth(1500)
+            #obj=QPixmap('img/pose_pic.png')
+            #obj = obj.scaledToHeight(850)
             self.img_label.setPixmap(obj)
-
             self.repaint()
 
-            time.sleep(4)
+            time.sleep(2)
 
             obj = QPixmap('photo.jpg')
-            obj = obj.scaledToWidth(1500)
+            #obj=QPixmap('img/dancer.png')
+            obj = obj.scaledToHeight(850)
             self.img_label.setPixmap(obj)
             self.title.setText('촬영사진')
-            
+
+            self.desc.setVisible(True)
             #오차율 출력 => 오차율이 작은 경우 : 승/ 오차율이 큰 경우 : 패
-            self.title.setText(str(result[0])) #player1 오차율
-            self.title.setText(str(result[1])) #player2 오차율
+            self.desc.setText('오차율 : '+str(result[0])) #player1 오차율
+            self.desc.setText('오차율 : '+str(result[1])) #player2 오차율
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
