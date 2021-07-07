@@ -25,7 +25,7 @@ import subprocess
 from io import StringIO
 import tensorflow.keras
 import numpy as np
-import cv2
+#import cv2
 
 form_class0 = uic.loadUiType("gamemenu.ui")[0]
 form_class1 = uic.loadUiType("intro.ui")[0]
@@ -410,6 +410,7 @@ class UIApp(QWidget):
 
 #이미지 촬영
 def takePicture():
+	time.sleep(2)
 	command = "raspistill -t 1 -o photo.jpg"   
 	subprocess.call(command, shell = True)
 
@@ -417,7 +418,7 @@ def takePicture():
 def resizeImg():
 	file = 'photo.jpg'
 	img = Image.open(file)
-	img = img.resize((540, 780), Image.ANTIALIAS)
+	img = img.resize((600, 800), Image.ANTIALIAS)
 	img.save('photo.jpg', quality=50)
 
 #포즈 유사도 계산 알고리즘
@@ -458,7 +459,7 @@ def analyzePose(self):
 		
 		flag=0
 		if len(response.json())==0 or len(response.json())==1:
-			print('다시 촬영하겠습니')
+			print('다시 촬영하겠습니다')
 			print(len(response.json()))
 			flag=1
 			return 1, 1, flag
@@ -535,7 +536,7 @@ class poseQuiz(QWidget):
 		self.key = 0
 		print("#########################")
         
-		obj = QPixmap('/home/pi/Desktop/quiz/img/posemain')
+		obj = QPixmap('/home/pi/Desktop/kt팀프로젝트/img/pose_main')
 		obj = obj.scaledToHeight(800)
 		self.img_label = QLabel()
 		self.img_label.setPixmap(obj)
@@ -693,6 +694,7 @@ class poseQuiz(QWidget):
 				result=analyzePose(self)
 				
 				if result[2]==0:
+					sound.correctSound()
 					break
 					
 			self.desc.setVisible(False)
@@ -719,9 +721,9 @@ class poseQuiz(QWidget):
 			self.desc.setVisible(True)
 			
 			if result[0]>result[1]: #player2가 이긴 경우
-				self.desc.setText('player1 : 패   player2 : 승')
-			else:
 				self.desc.setText('player1 : 승   player2 : 패')
+			else:
+				self.desc.setText('player1 : 패   player2 : 승')
 			
 			#오차율 출력 => 오차율이 작은 경우 : 승/ 오차율이 큰 경우 : 패
 			#self.desc.setText('오차율 : '+str(result[0])) #player1 오차율
@@ -867,40 +869,63 @@ class fruitQuiz3(QWidget):
 			subprocess.call(command, shell = True)
 			prediction = self.pred('test.jpg')  # 모델에 추론 이미지 인풋
 			print(prediction)
-
+			
+			for i in range(len(ansDict) - 1):
+				if prediction[0][i] >= 0.6:
+					if ansDict[i] == ans:
+						sound.correctSound()
+						obj = QPixmap('test.jpg')
+			
+						obj = obj.scaledToHeight(950)
+						obj = obj.scaledToWidth(600)
+		
+						self.label.setPixmap(obj)
+						self.img_name.setGeometry(90, 500, 1000, 300)
+						self.img_name.setText(ans + " 맞았습니다!")
+						return
+					else:
+						sound.wrongSound()
+						self.img_name.setGeometry(90, 500, 1000, 300)
+						self.img_name.setText(ansDict[i] + " 틀렸습니다!")
+						return
+						
+			"""
 			# 정답 확인.
 			if ansDict[0] == ans and prediction[0][0] >= 0.6:
 				# 정답
 				# sound.correctSound()
+				sound.correctSound()
 				print('사과 Correct !!')
 				break
 
 			elif ansDict[1] == ans and prediction[0][1] >= 0.6:
 				# 정답
-				# sound.correctSound()
+				sound.correctSound()
 				print('바나나 Correct !!')
 				break
 
 			elif ansDict[2] == ans and prediction[0][2] >= 0.6:
 				# 정답
-				# sound.correctSound()
+				sound.correctSound()
 				print('포도 Correct !!')
 				break
 
 			elif ansDict[3] == ans and prediction[0][3] >= 0.6:
 				# 정답
-				# sound.correctSound()
+				sound.correctSound()
 				print('딸기 Correct !!')
 
 				break
 
 			elif ansDict[4] == ans and prediction[0][4] >= 0.6:
 				# 정답
-				# sound.correctSound()
+				sound.correctSound()
 				print('레몬 Correct !!')
 				break
 			else:
 				continue
+				
+				
 		
 		obj = QPixmap('test.jpg')
 			
@@ -910,6 +935,7 @@ class fruitQuiz3(QWidget):
 		self.label.setPixmap(obj)
 		self.img_name.setGeometry(90, 500, 1000, 300)
 		self.img_name.setText("맞았습니다!")
+		"""
 
     ## (2) 티처블 머신 학습된 모델 코드
 	def pred(self, inference_data_path):  # .jpg 타입
