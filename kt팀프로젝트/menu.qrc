@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="/resource">
+    <file>resource/chooseindex.png</file>
+    <file>resource/fruit.png</file>
+    <file>resource/inmul.png</file>
+    <file>resource/pose.png</file>
+  </qresource>
+</RCC>
