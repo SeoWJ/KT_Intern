@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "crucial-botany-318311",
+  "private_key_id": "a877288b959da7cfa656e9a04cb885cb0e3c74a3",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCtjR70S/CNBUmc\nGsGZR5cHAJPZqYmHj6F8s/le8fFhlfFwiibWNkn/98+SFmSYWtRmcE96PHbmbYlk\nhSOP0UzRk9cTo8QtDWWPpPE4jHYXgFcMdI7vqcj1IUzyn2vxhu8YwZYGug5mF1Ei\niEzTsUKRiTbZB3EUlPwmPZKwXdnw6Xu9wkWf9BTotSP41O9sWHNLPbGGDIspXVYn\nzcmBf62YDXpiZk61g8wvE4BDRkoMlBmzRWMfSwm7ZnzRhhoSeM5sE4Kw1CNIp92U\nbwE80WGUBdo3j5b32sEfv8mkiAtUeFpF3DPcPCA2uJYwodOsUoEU5i/L0/uL3ePu\nCE1t3YB/AgMBAAECggEASH7an1HZeg7rYLoMhOrSu6oSGKopOOdWnbDQSkjme80W\nvdv3vSOQZcwueOfBvaKzdtcTXAxF3puC+OpkoH7dh+4puZp/KBKgihBscyK5cbe6\npQlLa/GQcFUov3C4tnuXBNBYyxaNTTgQPEyTSxqQpBqdPqtNITva2F6AGAwcLfWo\nucRnyc2KmjCd787AkywS0HCPG9yLg+nZyIasGTL/AlpI+FSKJ4x/OWcnpt55Zc7x\n+sqvWHYyaXte5ZvXdHvvVioNSxtTnyRfOiI4PnOGZfj53uMxZbzmi24XbUnb/kR/\n34F8nB2tApp6AxRK2qDd0DmUbpIzpI01kb0GvMCMAQKBgQDufBHqI5Njy6O9kPdU\n/OtyEBuw+GSaDI0KRZkat7M+Rk+zX7EeWNatdo4JxFbqivcvywldlDxpRGMuqAXU\nbAiUnCQGWl+hkCrAVZsHOBwgR5t8AeuRpw3xBDhnva6VM9unViOOjSBJYzVi3bDW\nN4a9mJjEorIW1riX9PqGtWpE3wKBgQC6TDBq6dmLL/b9qu0pAVY04e19XrdIotK2\nPcTfkM1BfEvPg7QeS2hhi7mroSQJb0gBmw/J9wfxHPZcEU/Sltif+6+3FxXPIEAV\noPcdeNpQxSoutNhimFWZt7BaA90dee5CYneY6bhBpwFcpFm+U57Mc9rEG8ERh82G\nVaT2geuYYQKBgGEwRsy4etRspOoYLfOAryLo1aAlWjo9ay0IeACfZHi4hrp/ANtx\nMOu4KOJqFVG4GExt3f847fWoXRMifl23OTf2+eds5RQegI2pVWh3wV6WUBMVZT8S\naWgTZDlC3+cGHznurMbnVIUT3SnRVsO2FT8m9PsNoq4UC15CA+bp/8jZAoGAA1E9\n/3lgjVDyVfwIMxW6AkEPqI7aNqnnlKUu70g1z3e2JeDTgUKYfjwttzesW5qmrpij\nRFZoxstcO7F3OWnEO70QmPMJSWHqojf2jojLYmrQYHqJ69+Ijq8trbyp4E9+haIZ\nPRjUVh7yMEMg8fmtNzjM6XcRDg3cBAtcX6NanaECgYEAi/8jqrO+Al6rh66/ATCX\nhBir4PWx1Ge/XrttegZtaSHN3/neBs/gf7qgKR+RboudkWnL1qBMCLiy+ddICX5Z\nHRUtsqm6AV7C2iYpqMqfuwhkLpDwABlO/iu48hepINlwOjH0bfvjh9SWeharqOF/\n56lsxLtQ8ezMFwoPqKg3x4k=\n-----END PRIVATE KEY-----\n",
+  "client_email": "id-team@crucial-botany-318311.iam.gserviceaccount.com",
+  "client_id": "100141882759669388828",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/id-team%40crucial-botany-318311.iam.gserviceaccount.com"
+}
